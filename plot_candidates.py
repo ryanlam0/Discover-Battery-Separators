@@ -1,0 +1,152 @@
+"""
+Part 5: Visualizing the Top Predicted Separator Candidates
+
+Creates a focused plot showing the top new polymer candidates
+predicted as safe separators, compared to known separator polymers.
+"""
+
+import pandas as pd
+import numpy as np
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import plotly.express as px
+
+# --- Load data ---
+df_training = pd.read_csv("data/training_data.csv")
+df_screen = pd.read_csv("data/screening_results.csv")
+
+# Get candidates predicted safe (>50% probability)
+df_top = df_screen[df_screen["predicted_proba_safe"] > 0.5].copy()
+df_top = df_top.sort_values("predicted_proba_safe", ascending=False)
+
+# Split candidates by confidence level
+top_high = df_top[df_top["predicted_proba_safe"] == 1.0].copy()
+top_mod = df_top[df_top["predicted_proba_safe"] < 1.0].copy()
+
+# ============================================================
+# PLOT 1: Top Candidates - Tg vs Tm (plotly scatter)
+# ============================================================
+
+# Build a combined DataFrame with group labels for plotly
+safe_train = df_training[df_training["safety"] == "safe"][["Tg (K)", "Tm (K)", "polymer"]].copy()
+safe_train = safe_train.rename(columns={"polymer": "Name"})
+safe_train["group"] = "Known safe"
+
+unsafe_train = df_training[df_training["safety"] == "unsafe"][["Tg (K)", "Tm (K)", "polymer"]].copy()
+unsafe_train = unsafe_train.rename(columns={"polymer": "Name"})
+unsafe_train["group"] = "Known unsafe"
+
+top_high_plot = top_high[["Tg (K)", "Tm (K)", "Name"]].copy()
+top_high_plot["group"] = "Top candidates (100% safe)"
+
+top_mod_plot = top_mod[["Tg (K)", "Tm (K)", "Name"]].copy()
+top_mod_plot["group"] = "Candidates (50-99% safe)"
+
+df_plot = pd.concat([safe_train, unsafe_train, top_high_plot, top_mod_plot],
+                    ignore_index=True)
+
+fig = px.scatter(df_plot, x="Tg (K)", y="Tm (K)", color="group",
+                 hover_data=["Name"],
+                 title="Top Predicted Safe Separator Polymer Candidates",
+                 color_discrete_map={
+                     "Known safe": "green",
+                     "Known unsafe": "red",
+                     "Top candidates (100% safe)": "dodgerblue",
+                     "Candidates (50-99% safe)": "lightskyblue",
+                 })
+# Label a curated set of top candidates with custom offsets to avoid overlap
+label_offsets = {
+    "PEKK":      (30, -25),
+    "PEN":       (25, 15),
+    "PGA":       (-60, -25),
+    "polyimides": (30, 10),
+    "PA 6":      (-55, 20),
+    "PHB":       (-50, -20),
+    "P(3HB)":    (30, -15),
+    "PLLA":      (-55, 15),
+    "PBO":       (25, 20),
+    "nylon 6":   (30, -10),
+}
+
+for _, row in top_high.iterrows():
+    if row["Name"] in label_offsets:
+        ax_off, ay_off = label_offsets[row["Name"]]
+        fig.add_annotation(
+            x=row["Tg (K)"], y=row["Tm (K)"],
+            text=row["Name"], showarrow=True,
+            arrowhead=0, ax=ax_off, ay=ay_off,
+            font=dict(size=10),
+            bgcolor="white", bordercolor="gray", borderpad=2,
+        )
+
+fig.update_layout(width=900, height=650)
+fig.write_image("figures/top_candidates.png", scale=2)
+print("Saved figures/top_candidates.png")
+
+# ============================================================
+# PLOT 2: Bar chart of top candidates ranked by key properties
+# ============================================================
+
+# Only use 100% safe candidates (all 7 neighbors voted safe)
+top_100 = top_high[top_high["predicted_proba_safe"] == 1.0]
+top_for_bar = top_100.drop_duplicates(subset="Name").copy()
+top_for_bar = top_for_bar.set_index("Name")
+
+# 6 real material properties (porosity & conductivity excluded — they are
+# imputed medians for screening candidates, so every bar is identical)
+properties = [
+    ("Tg (K)", "Glass Transition Temp"),
+    ("Tm (K)", "Melting Temp"),
+    ("Td (K)", "Decomposition Temp"),
+    ("Tensile Strength (MPa)", "Tensile Strength"),
+    ("Young's Modulus (MPa)", "Young's Modulus"),
+    ("Elongation at Break (%)", "Elongation at Break"),
+]
+
+# Also load known separator data for shared axes
+key_separators = ["PP", "PVDF", "PAN", "PET", "PI", "PPS", "PEI",
+                  "PA6", "PLA", "PTFE"]
+known_safe = df_training[df_training["polymer"].isin(key_separators)].copy()
+known_safe = known_safe.drop_duplicates(subset="polymer")
+known_safe = known_safe.set_index("polymer")
+
+# Compute shared x-axis limits across both datasets
+shared_xlims = {}
+for col, title in properties:
+    all_vals = pd.concat([top_for_bar[col], known_safe[col]])
+    shared_xlims[col] = (0, all_vals.max() * 1.1)
+
+# --- Plot 2a: Candidate properties ---
+fig, axes = plt.subplots(2, 3, figsize=(18, 12))
+axes = axes.flatten()
+
+for i, (col, title) in enumerate(properties):
+    ax = top_for_bar[[col]].plot.barh(ax=axes[i], legend=False)
+    ax.set_title(title)
+    ax.set_ylabel("")
+    ax.set_xlim(shared_xlims[col])
+    ax.invert_yaxis()
+
+fig.suptitle("Top Predicted Safe Separator Candidates (100% confidence): Material Properties",
+             fontsize=15, fontweight="bold")
+fig.tight_layout()
+fig.savefig("figures/candidate_properties.png", dpi=150, bbox_inches="tight")
+print("Saved figures/candidate_properties.png")
+
+# --- Plot 2b: Known separator properties (same axes) ---
+fig, axes = plt.subplots(2, 3, figsize=(18, 12))
+axes = axes.flatten()
+
+for i, (col, title) in enumerate(properties):
+    ax = known_safe[[col]].plot.barh(ax=axes[i], legend=False)
+    ax.set_title(title)
+    ax.set_ylabel("")
+    ax.set_xlim(shared_xlims[col])
+    ax.invert_yaxis()
+
+fig.suptitle("Common Battery Separator Polymers: Material Properties",
+             fontsize=15, fontweight="bold")
+fig.tight_layout()
+fig.savefig("figures/known_separator_properties.png", dpi=150, bbox_inches="tight")
+print("Saved figures/known_separator_properties.png")

@@ -1,0 +1,23 @@
+Number,Abbreviation,Explanation,Number,Abbreviation,Explanation
+1,PVDF,Poly(vinylidene fluoride),23,AFD,Average fiber diameter
+2,LIBs,Lithium-ion batteries,24,PI,Polyimide
+3,Li+,Lithium-ions,25,PET,Polyethylene terephthalate
+4,PP,Polypropylene,26,PMIA,Polymethyl methacrylate
+5,PE,Polyethylene,27,TM,Talcum
+6,PAN,Polyacrylonitrile,28,MMT,Montmorillonite
+7,HCNFs,Helical carbon nanofibers,29,MOFs,A metal-organic framework
+8,UiO-66,A Zr-based metal-organic framework,30,COFs,A novel hollow tube covalent organic frameworks
+9,PEG,Polyethylene glycol,31,CE,4′-aminobenzo-15-crown-5
+10,PBS,Polybutylene succinate,32,IL,Ionic liquids
+11,PVDF-HFP,Polyvinylidene fluoride-hexafluoropropylene,33,[Emim][TFSI],1-ethyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide
+12,SiO2,Silicon dioxide,34,P(VDF-TrFE),Poly(vinylidene fluoride-trifluoroethylene
+13,F-TiO2,Functionalized TiO2,35,PEO,Polyethylene oxide
+14,PDA,Polydopamine,36,LIGC-[15],Lignocellulose
+15,Al2O3,Aluminium oxide,37,Sb2O3,Antimony trioxide
+16,CA,Cellulose acetate,38,PVDF-CTFE,Poly(vinylidene fluoride-co-chlorotrifluoroethylene)
+17,HNT,Halloysite nanotube,39,TPP,Triphenyl phosphate
+18,DMF,"N,N-dimethylformamide",40,PA6,Nylon 6
+19,DMAc,"N,N-dimethylacetamide",41,CB,Carbon black
+20,ACET,Acetone,42,VOOH,The adsorption-catalysis material synthesized hydrothermally
+21,NMP,N-methyl pyrrolidone,43,PVP,Polyvinyl pyrrolidone
+22,DMSO,Dimethyl sulfoxide,/,,

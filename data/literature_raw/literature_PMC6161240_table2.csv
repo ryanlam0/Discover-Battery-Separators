@@ -1,0 +1,23 @@
+Materials,Electrolyte Solution,Porosity and Uptake (%),Conductivity (S·cm−1) and Capacity (mAh·g−1),Main Goal/Achievement,Reference
+PVDF,1 M (C2H5)3CH3NBF4 + AN,-/-,-/-,Study of multistep electrospinning technique on the fabrication of PVDF composite membranes;High specific power.,[30]
+PVDF,"1 M LiPF6 in EC:DEC (1:1, w/w)",-/816,6.83 × 10−4/101.1 (0.5C),Performance comparison with a PVDF-PDA separator;Enhanced cycling performance.,[31]
+PVDF,"1 M LiPF6 in EC:DEC (1:1, v/v)",7/-,-/-,Analysis of the migration mechanism of cation and anions through the separator;The separator allows the control of structural stability and ion mobility.,[32]
+PVDF,"1 M LiPF6 in EC/DMC/EMCC (1:1:1, w/w/w)",-/-,-/95 (0.2C),Production of a PVDF membrane;Good capacity retention.,[33]
+PVDF,1 M TEABF4 in AN/PC and 1 M LiPF6 in EC/DEC,80/-,1.8 × 10−2 (25 °C)/-,Manufacturing of a PVDF separator;Favorable mechanical properties.,[34]
+PVDF,1 M LiBF4 in EC/DMC (50:50 wt. %),-/-,4.17 × 10−3 (20 °C)/-,Comparison of PVDF membrane performance with Nafigate separators.,[35]
+PVDF,1 M LiPF6 in EC/DMC/DEC (1:1:1),78.9/427,1.72 × 10−3/164.3 (C/5),Synthesis of dual asymmetric structure separators;Improved electrolyte uptake and ionic conductivity.,[36]
+PVDF,1 M LiPF6 in EC/DMC/DEC (1:1:1),-/-,-/447.36 (0.3C),Production of a solid state SCPC with a PVDF separator;High storage capacity and stability.,[37]
+PVDF,-,-/-,-/-,Assembly of a PVDF separator for air-cathode as application in microbial fuel cells;Improved electricity generation.,[38]
+PVDF,PVA/H2SO4,-/-,-/-,Production of a PVDF separator for piezoelectric supercapacitors;High mechanical strength and elevated capacitance.,[39]
+PVDF,1 M NaClO4 in EC/DEC (1:1),81/34,7.38 × 10−4 (29 °C)/153,Production of an electroactive electrospun PVDF separator for sodium ion batteries.,[40]
+PVDF,1 M LiPF6 in EC/DEC (1:1),70/66,1.5 × 10−3/102 (2C),Study of the effect of different PVDF copolymers as lithium ion battery separators.Demonstration of the relevance of β-phase content.,[41]
+PVDF-TrFE,1 M LiPF6 in EC/DEC (1:1),72/84,1.1 × 10−3/118 (2C),,
+PVDF-HFP,1 M LiPF6 in EC/DEC (1:1),56/79,1.3 × 10−1/107 (2C),,
+PVDF-CTFE,1 M LiPF6 in EC/DEC (1:1),59/80,1.5 × 10−3/85 (2C),,
+PVDF,[C2mim][NTf2],20/98,2.3 × 10−4 (25 °C)/74.6 (C/5),Preparation of PVDF separators using a green solvent and ionic liquid as the electrolyte.,[9]
+PVDF-HFP,LiTFSI,48/248,5.2 × 10−5 (20 °C)/-,Application of disiloxane-based electrolytes on PVDF-HFP for the production of gel electrolyte separators;Good thermal and mechanical stability.,[42]
+PVDF-HFP,LiNfO/BMImNfO,-/-,2.61 × 10−2/(100 °C)138.1 (C/4),Production of ionic liquid gel polymer electrolytes;High ionic conductivity.,[43]
+PVDF-HFP,1 M LiPF6 in EC/DMC (1:2),70/247,3.2 × 10−3 (25 °C)/-,"Evaluation of the performance of PVDF-HFP, as a single polymer membrane. Understanding of the method of avoiding the formation of beads in the nanofibers of PVDF-HFP;Good electrolyte uptake.",[44]
+PVDF-HFP,1 M LiPF6 in EC:DMC (1:1),78/86.2,1.03 × 10−3/145 (0.2C),Development of a PVDF-HFP gel polymer electrolyte membrane with honeycomb type porous structure;Excellent electrochemical performance.,[45]
+PVDF-HFP,1 M LiPF6 in EC/DEC/EMC (1:1:1),-/-,-/-,Production of separators with controlled pore structure;Improved rates and cycling performances.,[46]
+PVDF-CTFE,"1 M LiPF6 in EC:DMC:EMC (1:1:1, v:v)",74/-,7.51 × 10−4 (25 °C)/147 (0.2C),Preparation of a nanofiber-coated composite separator by electrospinning;High discharge capacity and good cycling stability.,[47]

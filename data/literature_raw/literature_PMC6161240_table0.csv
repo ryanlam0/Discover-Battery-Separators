@@ -1,0 +1,7 @@
+Separator,Characteristics,Typical Materials
+Microporous,Operates at low temperatures (<100 °C); pore size = 50–100 Å,"Nonwoven fibers (cotton, nylon, polyester, glass), polymers (PP, PE, PVC, PTFE), rubber, asbestos, wood"
+Nonwoven,Resistance to degradation by electrolytes; thickness > 25 µm; pore size = 1–100 µm,"Polyolefins (PE, PP, PA, PTFE; PVDF; PVC)"
+Ion exchange membrane,High chemical resistance; impervious to electrolytes; pore size < 20 Å,"PE, PP, Teflon-based films"
+Supported liquid membrane,Solid matrix with a liquid phase; insolubility in electrolyte; high chemical stability,"PP, PSU, PTFE, CA"
+Polymer electrolyte,Simultaneously separator and electrolyte; high chemical and mechanical integrity,"Polyethers, PEO, PPO, lithium salts"
+Solid ion conductor,simultaneously separator and electrolyte,-

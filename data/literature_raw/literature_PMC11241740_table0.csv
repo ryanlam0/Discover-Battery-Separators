@@ -1,0 +1,8 @@
+Property,Cellulose-Based Separator,Polypropylene (PP) Separator and Polyethylene (PE) Separator
+Environmental,"Renewable, biodegradable","Nondegradable, long-term environmental impact"
+Thermal stability,"High, does not shrink or melt at high temperatures","Shrinks or melts at high temperatures, increasing thermal runaway risk"
+Electrolyte wettability,"Good, strong hydrophilicity","Poor, strong hydrophobicity, requires additional treatment"
+Mechanical strength,"High, effectively prevents short circuits","Lower, easily damaged, increasing short circuit risk"
+Electrochemical stability,"Good compatibility with electrolyte and electrode materials, fewer side reactions","Poor compatibility, may have side reactions"
+Production cost,"Potentially higher, requires improved processes for large-scale commercialization","Lower, already mass-produced"
+Commercial maturity,"In research stage, further validation needed for commercial use","Mature, widely used in current lithium-ion batteries"

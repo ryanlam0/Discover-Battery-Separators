@@ -1,0 +1,8 @@
+Separators,Electrospinning Methods,Post-Treatment Methods,Thickness/μm,Diameter/nm,Porosity/%,Electrolyte Uptake/%,Ionic Conductivity/(mS cm−1),Tensile Strength/MPa,Thermal Stability,Ref.
+PVDF-24 wt%,General syringe,Thermal treatment at 80 °C for 2 h,70,237.4–626.8,79.1,429,1.65,-,No significant shrinkage at 150 °C for 0.5 h,[100]
+PVDF-HFP/PI,Side-by-side electrospinning,Thermal treatment at 145 °C for 20 min,23,177.9,85.9,483.5,1.78,9.76,No significant shrinkage at 200 °C for 0.5 h,[144]
+PAN/PVDF-HFP/PVP,General syringe,Thermal treatment at 170 °C for 0.5 h,-,-,74.5,605.8,1.97,22.13,No significant shrinkage at 200 °C,[155]
+PMIA@PAN/PVDF-HFP/TiO2,Coaxial electrospinning,Thermal treatment at 170 °C,-,-,48.2,207.3,1.36,29.7,No significant shrinkage at 220 °C for 1 h,[73]
+PAN/CB/VOOH-PAN/PVDF-(HFP),General syringe,Pressing under 25 MPa for 1/3 h and then heat treated at 155 °C for 0.5 h,-,10–90,70.7,510.4,2.81,20.8,No significant shrinkage at 250 °C,[51]
+PAN/HCNFs@PVDF/UiO-66,Coaxial electrospinning,Hot pressing at 120 °C under 10 MPa for 2 h,25,489.6,77.61,570.97,1.59,24.77,No significant shrinkage at 200 °C for 1 h,[76]
+0°PAN/PVDF/90°PAN,"General syringe, layer-by-layer",Hot pressing at 35 °C under 2 MPa for 60 s,46,210,85.64,-,-,10.33,Slight folds at 180 °C for 0.5 h,[134]

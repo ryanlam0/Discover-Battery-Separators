@@ -1,0 +1,201 @@
+POSTER STORY GUIDE
+==================
+How to tell the story, which plots to use, and what to say.
+
+
+THE RESEARCH QUESTION
+---------------------
+"Can we predict whether a polymer is thermally safe for use as a battery
+separator based on its material properties — and can we screen untested
+polymers to discover new candidates?"
+
+
+THE ONE-SENTENCE PITCH
+----------------------
+"We trained a KNN classifier on known battery separator polymers to predict
+thermal safety, then screened 101 untested polymers and found 5 strong
+candidates that have never been tested as separators."
+
+
+STORY ARC (follow this order on the poster)
+--------------------------------------------
+
+1. HOOK (top-left, ~2 sentences)
+   "Every lithium-ion battery has a thin polymer film — the separator —
+   that prevents the electrodes from touching and causing a fire. If this
+   film melts or shrinks during overheating, the battery can catch fire.
+   Which polymers are thermally safe, and can we find new ones?"
+
+   WHY IT WORKS: Everyone uses batteries. Fire is scary. Sets up the stakes.
+
+
+2. DATA COLLECTION (left side, brief)
+   Explain the 3 data sources and how they were joined:
+   - OpenPoly database: 741 polymers with material properties (Tg, Tm, Td,
+     tensile strength, Young's modulus, elongation at break)
+   - Celgard: web scraped 30 commercial separator product specs
+   - Literature: web scraped 337 rows from 7 PMC review articles for
+     separator-specific properties (porosity, ionic conductivity)
+   - Joined by polymer name → 39 labeled training polymers
+
+   PLOT: None needed. A small data flow diagram or table is fine.
+
+   RUBRIC: Hits "Data Collection" (web scraping + multi-source joins)
+
+
+3. SAFETY LABELS (brief text)
+   "We labeled 39 known separator polymers as safe (maintains structural
+   integrity above 150C) or unsafe (fails at or below 150C) based on
+   published thermal stability data."
+
+   Training set: 25 safe, 14 unsafe
+
+
+4. MODEL BUILDING & SELECTION (center)
+   PLOT: model_selection.png
+   - Shows F1 score vs k for both Euclidean and Manhattan distance
+   - Best point labeled: k=7, Euclidean, F1 = 0.812
+
+   WHAT TO SAY: "We built a pipeline with StandardScaler + KNN classifier
+   and used GridSearchCV with 5-fold cross-validation to tune k and the
+   distance metric. The best model uses k=7 neighbors with Euclidean
+   distance."
+
+   RUBRIC: Hits "Data Analysis" (pipeline, StandardScaler, GridSearchCV,
+   cross-validation)
+
+
+5. MODEL EVALUATION (center-right)
+   PLOT: confusion_matrix_cv.png (USE THE CV VERSION, NOT TRAINING)
+   - Shows cross-validation confusion matrix: 23+10 correct, 4+2 errors
+   - Per-class metrics table: safe F1=0.885, unsafe F1=0.769
+   - Cross-Val Macro F1 = 0.827
+
+   WHAT TO SAY: "The cross-validation confusion matrix shows out-of-fold
+   predictions — each polymer is predicted by a model that never saw it
+   during training. The model catches 71% of unsafe polymers (10 out of 14).
+   In safety-critical applications, missing a dangerous polymer is worse
+   than rejecting a safe one."
+
+   KEY INSIGHT: Unsafe recall (0.714) is the most important metric here.
+   5 unsafe polymers were missed — these would be dangerous false positives
+   in a real application.
+
+   RUBRIC: Hits "Data Analysis" (confusion matrix, precision, recall, F1)
+   and "Real-World Application" (safety-critical framing)
+
+
+6. CLUSTERING (bottom-left)
+   PLOTS: elbow_plot.png + clusters_vs_safety.png
+
+   WHAT TO SAY: "We used K-means clustering (k=3, chosen from elbow plot)
+   to see if polymers naturally group by their material properties. Cluster 2
+   is 90% unsafe, Cluster 1 is 82% safe — material properties partially
+   predict safety, but the overlap shows a supervised classifier is needed."
+
+   KEY INSIGHT: Unsupervised clustering alone isn't enough. The KNN
+   classifier adds value by learning the decision boundary.
+
+   RUBRIC: Hits "Data Analysis" (K-means clustering, unsupervised learning)
+
+
+7. SCREENING RESULTS (bottom-center)
+   PLOT: screening_results.png
+
+   WHAT TO SAY: "We screened 101 untested polymers from the OpenPoly
+   database. The model predicted 55 as safe and 46 as unsafe. Most
+   engineering polymers are thermally stable — the model's value is
+   identifying the ~45% that aren't, narrowing the pool for further testing."
+
+   RUBRIC: Hits "Real-World Application" (actionable screening)
+
+
+8. TOP CANDIDATES & CONCLUSION (bottom-right)
+   PLOTS: top_candidates.png + candidate_properties.png + known_separator_properties.png
+
+   WHAT TO SAY: "5 polymers were predicted safe with 100% confidence:
+   polyimides, PEKK, PGA, PEN, and PA 6. These have high glass transition
+   temperatures (>300K), high melting points (>490K), and strong mechanical
+   properties — making them promising candidates for separator testing."
+
+   known_separator_properties.png shows the same 6 material properties
+   for 10 well-known separator polymers (PP, PVDF, PAN, PET, PI, PPS,
+   PEI, PA6, PLA, PTFE) on the same axes as candidate_properties.png.
+   Place them side by side so viewers can directly compare candidates to
+   established separators and see that the candidates' properties fall in
+   the same range — or exceed — those of proven materials.
+
+   CONCLUSION: "Material properties alone can predict thermal safety with
+   ~83% accuracy. Our model identifies promising candidates, but real-world
+   testing for porosity, ionic conductivity, and electrochemical stability
+   is still needed before these polymers could be used in batteries."
+
+   RUBRIC: Hits "Storytelling" (clear narrative arc from problem to solution)
+   and "Real-World Application" (specific, named candidates)
+
+
+POSTER LAYOUT SUGGESTION (24" x 36", landscape)
+------------------------------------------------
+
+  +------------------+-------------------+-------------------+
+  | TITLE + HOOK     | MODEL SELECTION   | CONFUSION MATRIX  |
+  | Research Q       | model_selection   | confusion_matrix  |
+  | Data Sources     |   .png            |   _cv.png         |
+  +------------------+-------------------+-------------------+
+  | CLUSTERING       | SCREENING         | TOP CANDIDATES    |
+  | elbow_plot.png   | screening_results | top_candidates    |
+  | clusters_vs_     |   .png            |   .png            |
+  |   safety.png     |                   | CONCLUSION        |
+  +------------------+-------------------+-------------------+
+
+If you have extra space, add candidate_properties.png and
+known_separator_properties.png side by side next to top_candidates.
+
+
+WHICH PLOTS TO USE (priority order):
+  1. confusion_matrix_cv.png  — model performance (MUST INCLUDE)
+  2. model_selection.png      — hyperparameter tuning (MUST INCLUDE)
+  3. clusters_vs_safety.png   — clustering insight (MUST INCLUDE)
+  4. top_candidates.png       — the "discovery" payoff (MUST INCLUDE)
+  5. screening_results.png    — full screening overview (MUST INCLUDE)
+  6. elbow_plot.png           — justifies k=3 for clustering (INCLUDE IF ROOM)
+  7. candidate_properties.png          — why the top 5 are good (NICE TO HAVE)
+  8. known_separator_properties.png    — compare candidates to proven separators (NICE TO HAVE, pair with #7)
+  9. kmeans_clusters.png               — SKIP (clusters_vs_safety already shows this)
+  10. confusion_matrix.png             — SKIP (use CV version instead)
+
+
+QUESTIONS YOU SHOULD BE READY TO ANSWER
+---------------------------------------
+Q: "Why KNN and not logistic regression or random forest?"
+A: "KNN was taught in class and works well for small datasets. It makes
+   no assumptions about the decision boundary shape."
+
+Q: "Why only 39 training polymers?"
+A: "We could only find 39 polymers that have both published safety data AND
+   material properties in the OpenPoly database. Small but representative."
+
+Q: "Why is unsafe recall only 71%?"
+A: "With only 14 unsafe examples, the model has limited data to learn from.
+   More labeled data would improve recall."
+
+Q: "Are these candidates actually good for batteries?"
+A: "We predict thermal safety only — whether the polymer won't melt/shrink.
+   A good separator also needs porosity, ionic conductivity, and chemical
+   stability, which require lab testing."
+
+Q: "Why did you drop porosity and conductivity from the model?"
+A: "Those features were only available for training polymers (from literature).
+   Screening candidates don't have that data, so filling with medians would
+   bias predictions. Using only the 6 universally available properties is
+   more honest."
+
+Q: "What do the clusters represent?"
+A: "K-means grouped polymers by similarity in their material properties,
+   without knowing safety labels. The fact that clusters partially align
+   with safety shows material properties contain safety-relevant signal."
+
+Q: "Why k=3 clusters if you only have 2 safety classes?"
+A: "We chose k=3 from the elbow plot — it's where inertia stops dropping
+   sharply. The clusters represent natural material groupings, not safety
+   classes. That they partially align is the interesting finding."

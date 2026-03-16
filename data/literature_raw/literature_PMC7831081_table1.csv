@@ -1,0 +1,24 @@
+Numerical Method,Model Parameters,Year,Ref
+Mathematical model,Bruggeman exponent α,2003,[27]
+Tortuosity,2009,[19],
+"Distance map, spatial distribution map, and histogram",2014,[28],
+,"Capacity loss, temperatures, and SOC",2017,[29]
+FEA and CFD,"Packing pattern, thickness variation, stress, and viscoelastic relaxation",2010,[30]
+"Stress distribution, thermal effect, friction, particle radius, separator thickness",2011,[31],
+Principal stresses and Von Mises stress,2014,[32],
+Stress-strain curves and force-displacement curves,2016,[33],
+"Porosity ε, tortuosity τ, and effectivetransport coefficient δ",2016,[34],
+"Stress-strain curves, deformed shapes, and pores diameter",2017,[35],
+"Strain, stress, node angle, voltage drop, and C-rate",2018,[36],
+"Porosity, TP tortuosity, separator thickness, and connectivity density",2018,[37],
+Stress-strain curves,2019,[38],
+"Thickness, porosity, energy density, heat generation rate, temperature, thermal conductivity, and heat capacity",2020,[39],
+MD,"Tip temperature, current density, and tip aspect ratio",2011,[40]
+"Li density, SEI thickness, component ratio",2011,[41],
+"Free energy, radial distribution functions, and proton transfer coordinate",2013,[42],
+Young’s modulus and density,2014,[43],
+"Proton concentration (i.e., CH+)",2016,[44],
+Proton conductivity and ion exchangecapacity value,2016,[45],
+"Temperature, density, heat flux, and thermal conductivity",2019,[46],
+Young’s modulus,2020,[47],
+Interfacial thermal conductance,2020,[48],

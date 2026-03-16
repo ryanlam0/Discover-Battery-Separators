@@ -1,0 +1,17 @@
+Key Parameters,Basic Requirements,Related Formulas,Ref.,col_0
+Feature parameters,Thickness.,<25 μm,-,[47]
+Pore size,<1 μm,-,[1],
+Porosity.,>40%,"Porosity(%)=W−W0ρLV0×100%
+
+1",[56],
+Electrolyte contact angle,"The smaller, the better",-,[54],
+Electrolyte uptake,-,"Electrolyte−uptake(%)=M−M0M0×100%
+
+2",[59],
+Performance parameters,Ionic conductivity,-,"σ=DRbA
+
+3",[56]
+Tensile strength,>98.06 MPa,,[46],
+Thermal stability,Shrinkage rate < 5% (90 °C for 1 h),"Thermal−shrinkage(%)=A0−AA0×100%
+
+4",[21],
