@@ -125,10 +125,18 @@ STORY ARC (follow this order on the poster)
    established separators and see that the candidates' properties fall in
    the same range — or exceed — those of proven materials.
 
+   LIMITATION: "Our model uses only the 6 material properties available
+   in the OpenPoly database. Separator-specific properties like porosity
+   and ionic conductivity were only available for the 39 known separators
+   (from literature scraping) — the 101 screening candidates have never
+   been tested as separators, so those measurements don't exist for them.
+   This is why we built the model on universally available features only."
+
    CONCLUSION: "Material properties alone can predict thermal safety with
-   ~83% accuracy. Our model identifies promising candidates, but real-world
-   testing for porosity, ionic conductivity, and electrochemical stability
-   is still needed before these polymers could be used in batteries."
+   ~83% accuracy. Our model narrows 101 untested polymers down to 5 strong
+   candidates, but real-world lab testing for porosity, ionic conductivity,
+   and electrochemical stability is still needed before these polymers
+   could be used in batteries."
 
    RUBRIC: Hits "Storytelling" (clear narrative arc from problem to solution)
    and "Real-World Application" (specific, named candidates)
