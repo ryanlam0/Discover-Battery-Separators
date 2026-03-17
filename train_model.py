@@ -190,7 +190,8 @@ fig = px.scatter(df_all_plot, x="Tg (K)", y="Tm (K)", color="group",
                      "Known safe": "green",
                      "Known unsafe": "red",
                  })
-fig.update_xaxes(title_text="Glass Transition Temperature (K)")
-fig.update_yaxes(title_text="Melting Temperature (K)")
+fig.update_layout(width=700, height=450)
+fig.update_xaxes(title_text="Glass Transition Temperature (K)", range=[150, 600], dtick=50)
+fig.update_yaxes(title_text="Melting Temperature (K)", range=[280, 650])
 fig.write_image("figures/screening_results.png", scale=2)
 print("Saved figures/screening_results.png")

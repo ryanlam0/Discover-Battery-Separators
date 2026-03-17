@@ -195,13 +195,17 @@ RUBRIC: Hits "Data Analysis" (pipeline, StandardScaler, GridSearchCV,
 WHAT TO SAY:
   "The cross-validation confusion matrix shows out-of-fold predictions —
   each polymer is predicted by a model that never saw it during training.
-  The model catches 71% of unsafe polymers (10 out of 14). In safety-
-  critical applications, missing a dangerous polymer is worse than
-  rejecting a safe one."
+  This is a screening tool that narrows candidates for lab testing, not
+  the final safety decision — so precision matters most. When the model
+  predicts 'safe,' it's correct 85% of the time (safe precision = 0.852).
+  The 4 unsafe polymers predicted as safe would be caught during lab
+  testing before ever going into a battery."
 
-KEY INSIGHT: Unsafe recall (0.714) is the most important metric here.
-  4 unsafe polymers were missed — these would be dangerous false
-  positives in a real application.
+KEY INSIGHT: This is a screening tool, not a safety gate. Precision on
+  "safe" (0.852) is the key metric — it tells us how much we can trust
+  the model's recommendations. The 4 missed unsafe polymers (unsafe
+  recall = 0.714) would waste some lab time but aren't dangerous because
+  lab testing is still required before any polymer goes into a battery.
 
 PLOT: confusion_matrix_cv.png (MUST INCLUDE — USE CV VERSION, NOT TRAINING)
   - Shows CV confusion matrix: 23+10 correct, 4+2 errors

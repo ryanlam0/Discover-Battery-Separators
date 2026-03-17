@@ -29,31 +29,20 @@ top_mod = df_top[df_top["predicted_proba_safe"] < 1.0].copy()
 # ============================================================
 
 # Build a combined DataFrame with group labels for plotly
-safe_train = df_training[df_training["safety"] == "safe"][["Tg (K)", "Tm (K)", "polymer"]].copy()
-safe_train = safe_train.rename(columns={"polymer": "Name"})
-safe_train["group"] = "Known safe"
-
-unsafe_train = df_training[df_training["safety"] == "unsafe"][["Tg (K)", "Tm (K)", "polymer"]].copy()
-unsafe_train = unsafe_train.rename(columns={"polymer": "Name"})
-unsafe_train["group"] = "Known unsafe"
-
 top_high_plot = top_high[["Tg (K)", "Tm (K)", "Name"]].copy()
-top_high_plot["group"] = "Top candidates (100% safe)"
+top_high_plot["group"] = "Top candidates (100% confidence)"
 
 top_mod_plot = top_mod[["Tg (K)", "Tm (K)", "Name"]].copy()
-top_mod_plot["group"] = "Candidates (50-99% safe)"
+top_mod_plot["group"] = "Candidates (50-99% confidence)"
 
-df_plot = pd.concat([safe_train, unsafe_train, top_high_plot, top_mod_plot],
-                    ignore_index=True)
+df_plot = pd.concat([top_high_plot, top_mod_plot], ignore_index=True)
 
 fig = px.scatter(df_plot, x="Tg (K)", y="Tm (K)", color="group",
                  hover_data=["Name"],
                  title="Top Predicted Safe Separator Polymer Candidates",
                  color_discrete_map={
-                     "Known safe": "green",
-                     "Known unsafe": "red",
-                     "Top candidates (100% safe)": "dodgerblue",
-                     "Candidates (50-99% safe)": "lightskyblue",
+                     "Top candidates (100% confidence)": "dodgerblue",
+                     "Candidates (50-99% confidence)": "lightskyblue",
                  })
 # Label a curated set of top candidates with custom offsets to avoid overlap
 label_offsets = {
@@ -80,9 +69,10 @@ for _, row in top_high.iterrows():
             bgcolor="white", bordercolor="gray", borderpad=2,
         )
 
-fig.update_layout(width=900, height=650)
-fig.update_xaxes(title_text="Glass Transition Temperature (K)")
-fig.update_yaxes(title_text="Melting Temperature (K)")
+fig.update_layout(width=700, height=450)
+fig.update_traces(marker=dict(size=9))
+fig.update_xaxes(title_text="Glass Transition Temperature (K)", range=[150, 600], dtick=50)
+fig.update_yaxes(title_text="Melting Temperature (K)", range=[280, 650])
 fig.write_image("figures/top_candidates.png", scale=2)
 print("Saved figures/top_candidates.png")
 
@@ -167,21 +157,22 @@ radar_labels = ["Glass Transition Temp", "Melting Temp",
 # Polymers to show: top 5 candidates + PI as baseline
 candidate_names = ["polyimides", "PEKK", "PGA", "PEN", "PA 6"]
 
-# Build a combined DataFrame of raw values
+# Build a combined DataFrame — baselines first so they render behind candidates
 radar_rows = []
+
+# Add PI and PAN first (drawn first = behind)
+pi = df_training[df_training["polymer"] == "polyimide"].iloc[0]
+radar_rows.append({"polymer": "PI (Known)",
+                   **{f: pi[f] for f in radar_features}})
+
+pan = df_training[df_training["polymer"] == "PAN"].iloc[0]
+radar_rows.append({"polymer": "PAN (Known)",
+                   **{f: pan[f] for f in radar_features}})
+
 for name in candidate_names:
     if name in top_for_bar.index:
         row = top_for_bar.loc[name, radar_features]
         radar_rows.append({"polymer": name, **row.to_dict()})
-
-# Add PI and PAN as known safe baselines
-pi = df_training[df_training["polymer"] == "polyimide"].iloc[0]
-radar_rows.append({"polymer": "PI (Known Separator)",
-                   **{f: pi[f] for f in radar_features}})
-
-pan = df_training[df_training["polymer"] == "PAN"].iloc[0]
-radar_rows.append({"polymer": "PAN (Known Separator)",
-                   **{f: pan[f] for f in radar_features}})
 
 df_radar = pd.DataFrame(radar_rows)
 
@@ -202,8 +193,8 @@ df_radar_long["property"] = df_radar_long["property"].map(label_map)
 fig = px.line_polar(df_radar_long, r="value", theta="property",
                     color="polymer", line_close=True,
                     color_discrete_map={
-                        "PI (Known Separator)": "#404040",
-                        "PAN (Known Separator)": "#a0a0a0",
+                        "PI (Known)": "#404040",
+                        "PAN (Known)": "#a0a0a0",
                     },
                     title="Top Candidates vs. Current Separators (Normalized)")
 fig.update_traces(fill="toself", opacity=0.6, marker=dict(size=8))
