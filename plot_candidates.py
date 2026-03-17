@@ -81,6 +81,8 @@ for _, row in top_high.iterrows():
         )
 
 fig.update_layout(width=900, height=650)
+fig.update_xaxes(title_text="Glass Transition Temperature (K)")
+fig.update_yaxes(title_text="Melting Temperature (K)")
 fig.write_image("figures/top_candidates.png", scale=2)
 print("Saved figures/top_candidates.png")
 
@@ -150,3 +152,65 @@ fig.suptitle("Common Battery Separator Polymers: Material Properties",
 fig.tight_layout()
 fig.savefig("figures/known_separator_properties.png", dpi=150, bbox_inches="tight")
 print("Saved figures/known_separator_properties.png")
+
+# ============================================================
+# PLOT 3: Radar chart — top candidates vs common separators
+# ============================================================
+
+radar_features = ["Tg (K)", "Tm (K)", "Td (K)",
+                  "Tensile Strength (MPa)", "Young's Modulus (MPa)",
+                  "Elongation at Break (%)"]
+radar_labels = ["Glass Transition Temp", "Melting Temp",
+                "Decomposition Temp", "Tensile Strength",
+                "Young's Modulus", "Elongation at Break"]
+
+# Polymers to show: top 5 candidates + PI as baseline
+candidate_names = ["polyimides", "PEKK", "PGA", "PEN", "PA 6"]
+
+# Build a combined DataFrame of raw values
+radar_rows = []
+for name in candidate_names:
+    if name in top_for_bar.index:
+        row = top_for_bar.loc[name, radar_features]
+        radar_rows.append({"polymer": name, **row.to_dict()})
+
+# Add PI and PAN as known safe baselines
+pi = df_training[df_training["polymer"] == "polyimide"].iloc[0]
+radar_rows.append({"polymer": "PI (Known Separator)",
+                   **{f: pi[f] for f in radar_features}})
+
+pan = df_training[df_training["polymer"] == "PAN"].iloc[0]
+radar_rows.append({"polymer": "PAN (Known Separator)",
+                   **{f: pan[f] for f in radar_features}})
+
+df_radar = pd.DataFrame(radar_rows)
+
+# Normalize each feature to 0-1 range so they're comparable on the same axes
+for f in radar_features:
+    fmin = df_radar[f].min()
+    fmax = df_radar[f].max()
+    df_radar[f] = (df_radar[f] - fmin) / (fmax - fmin) if fmax > fmin else 0.5
+
+# Reshape to long format for plotly (same pattern as px.scatter)
+df_radar_long = df_radar.melt(id_vars="polymer", value_vars=radar_features,
+                              var_name="property", value_name="value")
+
+# Replace column names with readable labels
+label_map = dict(zip(radar_features, radar_labels))
+df_radar_long["property"] = df_radar_long["property"].map(label_map)
+
+fig = px.line_polar(df_radar_long, r="value", theta="property",
+                    color="polymer", line_close=True,
+                    color_discrete_map={
+                        "PI (Known Separator)": "#404040",
+                        "PAN (Known Separator)": "#a0a0a0",
+                    },
+                    title="Top Candidates vs. Current Separators (Normalized)")
+fig.update_traces(fill="toself", opacity=0.6, marker=dict(size=8))
+fig.update_layout(width=900, height=650,
+                  polar=dict(radialaxis=dict(visible=False),
+                             angularaxis=dict(tickfont=dict(size=14))),
+                  legend=dict(y=1.15, x=1.15, xanchor="left", font=dict(size=13)),
+                  title_font_size=16)
+fig.write_image("figures/radar_candidates.png", scale=2)
+print("Saved figures/radar_candidates.png")

@@ -98,6 +98,7 @@ ax.annotate(f"Best: k={best_k}, {best_metric}\nF1 = {best_f1:.3f}",
             bbox=dict(boxstyle="round,pad=0.3", facecolor="yellow", alpha=0.8))
 ax.scatter([best_k], [best_f1], color="black", zorder=5, s=60)
 
+ax.set_xticks(range(1, 12))
 ax.set_xlabel("k (number of neighbors)")
 ax.set_ylabel("F1 Score (macro)")
 ax.set_title("Model Selection: F1 vs k")
@@ -189,5 +190,7 @@ fig = px.scatter(df_all_plot, x="Tg (K)", y="Tm (K)", color="group",
                      "Known safe": "green",
                      "Known unsafe": "red",
                  })
+fig.update_xaxes(title_text="Glass Transition Temperature (K)")
+fig.update_yaxes(title_text="Melting Temperature (K)")
 fig.write_image("figures/screening_results.png", scale=2)
 print("Saved figures/screening_results.png")

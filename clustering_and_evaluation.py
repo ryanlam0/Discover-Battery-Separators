@@ -115,8 +115,10 @@ cluster_colors = {"0": "#636EFA", "1": "#EF553B", "2": "#00CC96"}
 fig = px.scatter(df_all, x="Tg (K)", y="Tm (K)", color="Cluster",
                  hover_data=["Name"],
                  color_discrete_map=cluster_colors,
-                 title="K-Means Clusters vs. Known Safety Labels")
-fig.update_traces(marker=dict(size=6, opacity=0.5))
+                 title="K-Means Clusters vs. Known Safety Labels<br>(Clustered on all 6 properties, visualized in Tg vs Tm space)")
+fig.update_traces(marker=dict(size=6, opacity=0.8))
+fig.update_xaxes(title_text="Glass Transition Temperature (K)")
+fig.update_yaxes(title_text="Melting Temperature (K)")
 
 # Overlay known polymers: same cluster color, different shape
 # One legend entry per safety label (not per cluster x safety combo)
@@ -151,10 +153,8 @@ for trace in fig.data:
     if "Known" in trace.name and trace.x is not None and len(trace.x) > 1:
         trace.showlegend = False
 
-fig.update_xaxes(range=[df_all["Tg (K)"].min() - 20,
-                        df_all["Tg (K)"].max() + 20])
-fig.update_yaxes(range=[df_all["Tm (K)"].min() - 20,
-                        df_all["Tm (K)"].max() + 20])
+fig.update_xaxes(range=[df_all["Tg (K)"].min() - 20, 600])
+fig.update_yaxes(range=[df_all["Tm (K)"].min() - 20, 650])
 fig.write_image("figures/clusters_vs_safety.png", scale=2)
 print("Saved figures/clusters_vs_safety.png")
 
@@ -254,7 +254,10 @@ fig, (ax_cm, ax_metrics) = plt.subplots(1, 2, figsize=(12, 5),
 # Left: CV confusion matrix heatmap
 disp_cv = ConfusionMatrixDisplay(cm_cv, display_labels=labels)
 disp_cv.plot(ax=ax_cm, cmap="Blues", values_format="d")
-ax_cm.set_title("Cross-Validation Confusion Matrix")
+ax_cm.set_title("Cross-Validation Confusion Matrix", fontsize=14)
+ax_cm.set_xlabel("Predicted Label", fontsize=13)
+ax_cm.set_ylabel("True Label", fontsize=13)
+ax_cm.tick_params(labelsize=12)
 
 # Right: CV precision, recall, F1 table
 ax_metrics.axis("off")
@@ -272,17 +275,17 @@ table = ax_metrics.table(
     cellLoc="center"
 )
 table.auto_set_font_size(False)
-table.set_fontsize(13)
-table.scale(1, 2)
+table.set_fontsize(15)
+table.scale(1, 2.2)
 
 cv_macro_f1 = f1_score(y_train, y_cv_pred, average="macro")
-ax_metrics.set_title("Per-Class Metrics (CV)", fontsize=12)
+ax_metrics.set_title("Per-Class Metrics (CV)", fontsize=14)
 ax_metrics.text(0.5, 0.15, f"Cross-Val Macro F1 = {cv_macro_f1:.3f}",
                 transform=ax_metrics.transAxes,
-                ha="center", fontsize=14, fontweight="bold")
+                ha="center", fontsize=16, fontweight="bold")
 
 fig.suptitle("KNN Separator Safety Classifier — Cross-Validation Performance",
-             fontsize=14, fontweight="bold")
+             fontsize=16, fontweight="bold")
 fig.tight_layout()
 fig.savefig("figures/confusion_matrix_cv.png", dpi=150, bbox_inches="tight")
 print("Saved figures/confusion_matrix_cv.png")
