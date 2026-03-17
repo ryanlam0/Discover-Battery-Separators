@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 
 # Load the OpenPoly dataset
-df_polymers = pd.read_csv("data/final_polymer_properties_fromliterature.csv")
+df_polymers = pd.read_csv("data/OpenPoly_polymers.csv")
 print(f"Shape: {df_polymers.shape}")
 print(df_polymers.head())
 

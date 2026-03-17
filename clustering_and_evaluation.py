@@ -21,8 +21,8 @@ from sklearn.metrics import (confusion_matrix, ConfusionMatrixDisplay,
                              precision_score, recall_score, f1_score)
 
 # --- Load data ---
-df_training = pd.read_csv("data/training_data.csv")
-df_polymers = pd.read_csv("data/final_polymer_properties_fromliterature.csv")
+df_training = pd.read_csv("data/39known_polymers(training_data).csv")
+df_polymers = pd.read_csv("data/OpenPoly_polymers.csv")
 
 # Features used for KNN classification (only OpenPoly properties
 # that are available for both training and screening polymers)

@@ -18,7 +18,7 @@ from sklearn.model_selection import cross_val_score, GridSearchCV
 from sklearn.metrics import confusion_matrix, f1_score
 
 # --- Step 1: Load training data ---
-df_training = pd.read_csv("data/training_data.csv")
+df_training = pd.read_csv("data/39known_polymers(training_data).csv")
 
 key_features = ["Tg (K)", "Tm (K)", "Td (K)",
                 "Tensile Strength (MPa)", "Young's Modulus (MPa)",
@@ -133,7 +133,7 @@ for label in ["safe", "unsafe"]:
 # --- Step 6: Screen OpenPoly polymers ---
 print("\n=== Screening OpenPoly Polymers ===")
 
-df_polymers = pd.read_csv("data/final_polymer_properties_fromliterature.csv")
+df_polymers = pd.read_csv("data/OpenPoly_polymers.csv")
 
 # Get polymers with complete base features that are NOT in our training set
 base_features = ["Tg (K)", "Tm (K)", "Td (K)",
@@ -165,8 +165,8 @@ print("\n=== Screening Summary ===")
 print(df_screen["predicted_safety"].value_counts())
 
 # Save full screening results
-df_screen.to_csv("data/screening_results.csv", index=False)
-print("\nSaved to data/screening_results.csv")
+df_screen.to_csv("data/101screening_polymers.csv", index=False)
+print("\nSaved to data/101screening_polymers.csv")
 
 # --- Visualization: where do candidates sit in property space? ---
 import plotly.express as px

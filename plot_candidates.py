@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 
 # --- Load data ---
-df_training = pd.read_csv("data/training_data.csv")
-df_screen = pd.read_csv("data/screening_results.csv")
+df_training = pd.read_csv("data/39known_polymers(training_data).csv")
+df_screen = pd.read_csv("data/101screening_polymers.csv")
 
 # Get candidates predicted safe (>50% probability)
 df_top = df_screen[df_screen["predicted_proba_safe"] > 0.5].copy()
@@ -76,72 +76,10 @@ fig.update_yaxes(title_text="Melting Temperature (K)", range=[280, 650])
 fig.write_image("figures/top_candidates.png", scale=2)
 print("Saved figures/top_candidates.png")
 
-# ============================================================
-# PLOT 2: Bar chart of top candidates ranked by key properties
-# ============================================================
-
-# Only use 100% safe candidates (all 7 neighbors voted safe)
+# --- Prepare top candidate data for radar chart ---
 top_100 = top_high[top_high["predicted_proba_safe"] == 1.0]
 top_for_bar = top_100.drop_duplicates(subset="Name").copy()
 top_for_bar = top_for_bar.set_index("Name")
-
-# 6 real material properties (porosity & conductivity excluded — they are
-# imputed medians for screening candidates, so every bar is identical)
-properties = [
-    ("Tg (K)", "Glass Transition Temp"),
-    ("Tm (K)", "Melting Temp"),
-    ("Td (K)", "Decomposition Temp"),
-    ("Tensile Strength (MPa)", "Tensile Strength"),
-    ("Young's Modulus (MPa)", "Young's Modulus"),
-    ("Elongation at Break (%)", "Elongation at Break"),
-]
-
-# Also load known separator data for shared axes
-key_separators = ["PP", "PVDF", "PAN", "PET", "PI", "PPS", "PEI",
-                  "PA6", "PLA", "PTFE"]
-known_safe = df_training[df_training["polymer"].isin(key_separators)].copy()
-known_safe = known_safe.drop_duplicates(subset="polymer")
-known_safe = known_safe.set_index("polymer")
-
-# Compute shared x-axis limits across both datasets
-shared_xlims = {}
-for col, title in properties:
-    all_vals = pd.concat([top_for_bar[col], known_safe[col]])
-    shared_xlims[col] = (0, all_vals.max() * 1.1)
-
-# --- Plot 2a: Candidate properties ---
-fig, axes = plt.subplots(2, 3, figsize=(18, 12))
-axes = axes.flatten()
-
-for i, (col, title) in enumerate(properties):
-    ax = top_for_bar[[col]].plot.barh(ax=axes[i], legend=False)
-    ax.set_title(title)
-    ax.set_ylabel("")
-    ax.set_xlim(shared_xlims[col])
-    ax.invert_yaxis()
-
-fig.suptitle("Top Predicted Safe Separator Candidates (100% confidence): Material Properties",
-             fontsize=15, fontweight="bold")
-fig.tight_layout()
-fig.savefig("figures/candidate_properties.png", dpi=150, bbox_inches="tight")
-print("Saved figures/candidate_properties.png")
-
-# --- Plot 2b: Known separator properties (same axes) ---
-fig, axes = plt.subplots(2, 3, figsize=(18, 12))
-axes = axes.flatten()
-
-for i, (col, title) in enumerate(properties):
-    ax = known_safe[[col]].plot.barh(ax=axes[i], legend=False)
-    ax.set_title(title)
-    ax.set_ylabel("")
-    ax.set_xlim(shared_xlims[col])
-    ax.invert_yaxis()
-
-fig.suptitle("Common Battery Separator Polymers: Material Properties",
-             fontsize=15, fontweight="bold")
-fig.tight_layout()
-fig.savefig("figures/known_separator_properties.png", dpi=150, bbox_inches="tight")
-print("Saved figures/known_separator_properties.png")
 
 # ============================================================
 # PLOT 3: Radar chart — top candidates vs common separators

@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 
 # --- Load data sources ---
-df_polymers = pd.read_csv("data/final_polymer_properties_fromliterature.csv")
+df_polymers = pd.read_csv("data/OpenPoly_polymers.csv")
 
 # ============================================================
 # STEP 1: Compile known separator polymers with safety labels
@@ -135,5 +135,5 @@ for f in key_features:
 # or below 150C are labeled "unsafe".
 
 # Save
-df_training.to_csv("data/training_data.csv", index=False)
-print("\nSaved to data/training_data.csv")
+df_training.to_csv("data/39known_polymers(training_data).csv", index=False)
+print("\nSaved to data/39known_polymers(training_data).csv")
