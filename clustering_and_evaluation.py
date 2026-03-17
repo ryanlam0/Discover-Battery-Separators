@@ -121,7 +121,6 @@ fig.update_xaxes(title_text="Glass Transition Temperature (K)")
 fig.update_yaxes(title_text="Melting Temperature (K)")
 
 # Overlay known polymers: same cluster color, different shape
-# One legend entry per safety label (not per cluster x safety combo)
 shape_map = {"safe": "square", "unsafe": "x"}
 for label in ["safe", "unsafe"]:
     subset = df_training_clustered[df_training_clustered["safety"] == label]
@@ -137,7 +136,7 @@ for label in ["safe", "unsafe"]:
                     line=dict(width=1.5, color="black")),
         text=subset["polymer"], hoverinfo="text")
 
-# Add invisible dummy traces with black triangles for a clean legend
+# Add dummy traces for a clean legend
 for label in ["safe", "unsafe"]:
     fig.add_scatter(
         x=[None], y=[None], mode="markers",
